@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 
 // ignore: use_key_in_widget_constructors
-class HomePage
- extends StatelessWidget {
+class HomePage extends StatelessWidget {
   final int days = 30;
   final String name = "DuckCoder";
   @override
@@ -15,8 +14,8 @@ class HomePage
       body: Center(
         // ignore: avoid_unnecessary_containers
         child: Container(
-          child: Text("wellcome to $days days of Flutter by $name"),
-        ),
+            // child: Text("wellcome to $days days of Flutter by $name"),
+            ),
       ),
       // drawer: Drawer(),
     );
