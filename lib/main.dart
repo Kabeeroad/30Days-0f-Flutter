@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-
+import 'database.dart';
 void main() {
   runApp(const MyContact());
 }
@@ -28,8 +27,8 @@ class _MyContactState extends State<MyContact> {
               child: TextField(
                 decoration: InputDecoration(
                     filled: true,
-                    fillColor:
-                        const Color.fromARGB(255, 156, 192, 220), // Background color for the text field
+                    fillColor: const Color.fromARGB(255, 156, 192,
+                        220), // Background color for the text field
 
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(
@@ -43,35 +42,74 @@ class _MyContactState extends State<MyContact> {
                     hintText: "search"),
               ),
             ),
-           const  Divider(),
+            const Divider(),
             const Row(
               // mainAxisSize: MainAxisSize.max,
               children: [
                 Padding(
-                  padding: EdgeInsets.only(left: 20.0, right: 8.0),
-                  child:CircleAvatar(
-                    backgroundColor: Color.fromARGB(255, 137, 189, 231),
-                    radius: 20,
-                    child: Icon(Icons.groups_2_rounded,color: Colors.blue,),
-                  )
-                  
-                  
-                  //  Icon(Icons.groups_2_sharp),
-                  
-                ),
+                    padding: EdgeInsets.only(left: 20.0, right: 8.0),
+                    child: CircleAvatar(
+                      backgroundColor: Color.fromARGB(255, 137, 189, 231),
+                      radius: 20,
+                      child: Icon(
+                        Icons.groups_2_rounded,
+                        color: Colors.blue,
+                      ),
+                    )
+
+                    //  Icon(Icons.groups_2_sharp),
+
+                    ),
                 SizedBox(
                   width: 8,
                 ),
-                Text('MyGroup',style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),),
+                Text(
+                  'MyGroup',
+                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                ),
                 Padding(
                   padding: EdgeInsets.all(0),
                   child: Icon(Icons.arrow_forward_ios_outlined),
                 )
               ],
             ),
-            Divider(),
+            const Divider(),
+            Expanded(
+              child: ListView.builder(
+                itemCount: 8,
+                itemBuilder: (BuildContext context, index) {
+                  return Expanded(
+                    child: ListTile(
+                      leading: CircleAvatar(
+                        backgroundImage:
+                            AssetImage('assets/img/logo$index.png'),
+                      ),
+                      title: Text(name[index]),
+                      subtitle: Text(number[index].toString()),
+                      trailing:  Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          IconButton(
+                            
+                            icon:const Icon(Icons.message),
+                            onPressed: () {
+                              // print('Message tapped for Contact $index');
+                            },
+                          ),
+                          IconButton(
+                            icon:const Icon(Icons.call),
+                            onPressed: () {
+                              // print('Call tapped for Contact $index');
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
           ],
-          // crossAxisAlignment: CrossAxisAlignment.center,
         ),
       ),
     );
@@ -80,9 +118,21 @@ class _MyContactState extends State<MyContact> {
 
 
 
-// // final contactname ;
+
+
+
+
+
+
+
+// import 'package:flutter/material.dart';
+
+// void main() {
+//   runApp(ContactApp());
+// }
+
 // class ContactApp extends StatelessWidget {
-//   @overrid
+//   @override
 //   Widget build(BuildContext context) {
 //     return MaterialApp(
 //       home: ContactScreen(),
@@ -95,71 +145,130 @@ class _MyContactState extends State<MyContact> {
 //   Widget build(BuildContext context) {
 //     return Scaffold(
 //       appBar: AppBar(
-//         title: const Text(
-//           "Contacts",
-//           style: TextStyle(),
-//         ),
+//         title: Text("Contacts"),
 //       ),
 //       body: Column(
 //         children: [
 //           // Search TextField
-//           const Padding(
-//             padding: EdgeInsets.all(8.0),
+//           Padding(
+//             padding: const EdgeInsets.all(8.0),
 //             child: TextField(
 //               decoration: InputDecoration(
-//                 prefixIcon: Icon(Icons.search, color: Colors.blue),
 //                 hintText: "Search contacts...",
+//                 prefixIcon: Icon(Icons.search),
 //               ),
 //             ),
 //           ),
 //           // Group icon and text
-//           const Row(
+//           Row(
 //             children: [
 //               Padding(
-//                 padding: EdgeInsets.all(8.0),
-//                 child: Icon(
-//                   Icons.group,
-//                   color: Colors.blue,
-//                 ),
+//                 padding: const EdgeInsets.all(8.0),
+//                 child: Icon(Icons.group),
 //               ),
 //               Text("MyGroup"),
 //             ],
 //           ),
 //           // Contact List
 //           Expanded(
-//             child: Scrollbar(
-//               thickness: 10,
-//               interactive: true,
-//               isAlwaysShown: true,
-//               controller: ScrollController(),
-//               child: ListView.builder(
-//                 itemCount: 8, // Replace this with the actual number of contacts
-//                 itemBuilder: (context, index) {
-//                   return
-//                       //    ListTile(
-//                       //   // Show images from picsum.photos
-//                       //   leading: CircleAvatar(
-//                       //     backgroundImage: AssetImage('assets/images/logo$index.png') ,
-
-//                       //   ),
-//                       // title: Text(contactname[index]),
-//                       // subtitle: Text('$contactnumber:0$index'),
-//                       // );
-//                       ContactCard(
-//                     img: "assets/imgs/logo$index.png",
-//                     name: "contactname $index",
-//                     number: "contactnumber $index",
-//                     onMessageTap: () {
-//                       print("Message tapped for Contact $index");
-//                     },
-//                     onCallTap: () {
-//                       // Implement action for call icon tap
-//                       print("Call tapped for Contact $index");
-//                     },
-//                   );
-//                 },
-//               ),
+//             child: ListView.builder(
+//               itemCount: 10, // Replace this with the actual number of contacts
+//               itemBuilder: (context, index) {
+//                 return ContactCard(
+//                   // Pass contact data to the card
+//                   img: "contact_image_$index.jpg", // Replace with the actual image path
+//                   name: "Contact Name $index",
+//                   number: "Contact Number $index",
+//                   onMessageTap: () {
+//                     // Implement action for message icon tap
+//                     print("Message tapped for Contact $index");
+//                   },
+//                   onCallTap: () {
+//                     // Implement action for call icon tap
+//                     print("Call tapped for Contact $index");
+//                   },
+//                 );
+//               },
 //             ),
 //           ),
 //         ],
 //       ),
+//       // Bottom Navigation Bar
+//       bottomNavigationBar: BottomNavigationBar(
+//         items: [
+//           BottomNavigationBarItem(
+//             icon: Icon(Icons.icon1), // Replace with your icon1
+//             label: "Screen 1", // Replace with the label for screen 1
+//           ),
+//           BottomNavigationBarItem(
+//             icon: Icon(Icons.icon2), // Replace with your icon2
+//             label: "Screen 2", // Replace with the label for screen 2
+//           ),
+//         ],
+//       ),
+//       // Floating Action Buttons
+//       floatingActionButton: Column(
+//         mainAxisAlignment: MainAxisAlignment.end,
+//         children: [
+//           FloatingActionButton(
+//             onPressed: () {
+//               // Implement action for icon3
+//               print("Icon3 tapped");
+//             },
+//             child: Icon(Icons.icon3), // Replace with your icon3
+//           ),
+//           SizedBox(height: 16),
+//           FloatingActionButton(
+//             onPressed: () {
+//               // Implement action for icon4
+//               print("Icon4 tapped");
+//             },
+//             child: Icon(Icons.icon4), // Replace with your icon4
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }
+
+// class ContactCard extends StatelessWidget {
+//   final String img;
+//   final String name;
+//   final String number;
+//   final VoidCallback onMessageTap;
+//   final VoidCallback onCallTap;
+
+//   ContactCard({
+//     required this.img,
+//     required this.name,
+//     required this.number,
+//     required this.onMessageTap,
+//     required this.onCallTap,
+//   });
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Card(
+//       child: ListTile(
+//         leading: CircleAvatar(
+//           backgroundImage: AssetImage(img),
+//         ),
+//         title: Text(name),
+//         subtitle: Text(number),
+//         trailing: Row(
+//           mainAxisSize: MainAxisSize.min,
+//           children: [
+//             IconButton(
+//               icon: Icon(Icons.message),
+//               onPressed: onMessageTap,
+//             ),
+//             IconButton(
+//               icon: Icon(Icons.call),
+//               onPressed: onCallTap,
+//             ),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }
