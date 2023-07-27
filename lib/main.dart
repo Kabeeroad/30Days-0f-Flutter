@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+// import 'package:icons_plus/icons_plus.dart';
 import 'database.dart';
+
 void main() {
   runApp(const MyContact());
 }
@@ -78,6 +80,7 @@ class _MyContactState extends State<MyContact> {
               child: ListView.builder(
                 itemCount: 8,
                 itemBuilder: (BuildContext context, index) {
+                  //  const Divider();
                   return Expanded(
                     child: ListTile(
                       leading: CircleAvatar(
@@ -86,18 +89,17 @@ class _MyContactState extends State<MyContact> {
                       ),
                       title: Text(name[index]),
                       subtitle: Text(number[index].toString()),
-                      trailing:  Row(
+                      trailing: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           IconButton(
-                            
-                            icon:const Icon(Icons.message),
+                            icon: const Icon(Icons.message),
                             onPressed: () {
-                              // print('Message tapped for Contact $index');
+                              print('Message tapped for Contact $index');
                             },
                           ),
                           IconButton(
-                            icon:const Icon(Icons.call),
+                            icon: const Icon(Icons.call),
                             onPressed: () {
                               // print('Call tapped for Contact $index');
                             },
@@ -111,11 +113,53 @@ class _MyContactState extends State<MyContact> {
             ),
           ],
         ),
-      ),
-    );
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {},
+          child: const Icon(Icons.add),
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        bottomNavigationBar: BottomAppBar(
+          shape: const CircularNotchedRectangle(),
+          notchMargin: 10,
+          child: Container(
+            height: 60,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    IconButton(
+                      icon: const Icon(Icons.home),
+                      onPressed: () {},
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.settings),
+                      onPressed: () {},
+                    ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    IconButton(
+                      icon: const Icon(Icons.settings),
+                      onPressed: () {},
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.home),
+                      onPressed: () {},
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+     ), );
   }
 }
 
+       
 
 
 
